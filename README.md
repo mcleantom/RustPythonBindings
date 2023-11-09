@@ -19,7 +19,7 @@ pip install .
 
 Example:
 
-```
+```python
 import RustPythonBindings
 x = RustPythonBindings.Number(10)
 y = RustPythonBindings.Number(20)
