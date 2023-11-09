@@ -38,14 +38,6 @@ Namespaces are one honking great idea -- let's do more of those!
     return text * 1000
 
 
-def run_twice(executor: ThreadPoolExecutor, func, *args, **kwargs):
-    f1 = executor.submit(func, *args, **kwargs)
-    f2 = executor.submit(func, *args, **kwargs)
-    r1 = f1.result()
-    r2 = f2.result()
-    return r1, r2
-
-
 def run_n_times(executor: ThreadPoolExecutor, func, n: int, *args, **kwargs):
     futures = [executor.submit(func, *args, **kwargs) for _ in range(n)]
     results = [f.result() for f in futures]
@@ -55,8 +47,8 @@ def run_n_times(executor: ThreadPoolExecutor, func, n: int, *args, **kwargs):
 def main():
     words = contents()
     needle = "is"
-    n = 1_000
-    with ThreadPoolExecutor(max_workers=2) as e:
+    n = 10_000
+    with ThreadPoolExecutor(max_workers=None) as e:
         with timer("sequential"):
             run_n_times(e, search_sequential, n, words, needle)
         with timer("parallel"):
